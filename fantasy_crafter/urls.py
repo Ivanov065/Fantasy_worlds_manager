@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include("node_manager.urls"))
+    path("", include(("node_manager.urls", "node_manager"), namespace='node_manager')),
+    path("users/", include(("users.urls", "users"), namespace='users'))
 ]
+urlpatterns += staticfiles_urlpatterns()

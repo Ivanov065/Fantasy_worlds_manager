@@ -1,0 +1,8 @@
+{% extends 'base_layout.html' %}
+    
+{% block content %}
+    <h1>My worlds</h1>
+    {% for node in nodes %}
+        <h2>node.name</h2>
+    {% endfor %}
+{% endblock %}

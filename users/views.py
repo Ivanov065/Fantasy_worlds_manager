@@ -17,13 +17,13 @@ def log_in(request):
     if form.is_valid() and request.method == "POST":
         user = form.get_user()
         login(request, user)
-        return redirect("app:home")
+        return redirect("node_manager:home")
 
     return render(request, "login.html", {"form": form})
 
 def log_out(request):
     if request.method == "POST":
         logout(request)
-        return redirect("users:login")
+        return redirect("node_manager:home")
 
     return render(request, "logout.html")
