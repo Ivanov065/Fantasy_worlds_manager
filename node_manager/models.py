@@ -12,8 +12,8 @@ class AccessModes(models.Model):
 class Nodes(models.Model):
     name = models.CharField(max_length=200)
     access_mode = models.ForeignKey(AccessModes, null=False, blank=False, on_delete=models.DO_NOTHING)
-    creator = models.ForeignKey(User, null=False, blank=False, editable=False, on_delete=models.DO_NOTHING, related_name='node_creator') # TODO: make "if creator deleted" logic
     owner = models.ForeignKey(User, null=False, blank=False, on_delete=models.DO_NOTHING, related_name='node_owner') # TODO: make "if owner changes" logic
+    creator = models.ForeignKey(User, null=False, blank=False, on_delete=models.DO_NOTHING, related_name='node_creator') # TODO: make "if creator deleted" logic
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL)
 
 # Contains pieces of information about certain node in text 
