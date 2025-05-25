@@ -1,0 +1,22 @@
+{% extends 'base_layout.html' %}
+    
+{% block content %}
+
+    <div class="container my-5">
+        <div class="p-4 text-left bg-body-tertiary rounded-3">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name_input" class="form-label">Название дерева</label>
+                    {{ form.name }}
+                </div>
+                <div class="mb-3">
+                    <label for="access_mode_input" class="form-label">Видимость дерева</label>
+                    {{ form.access_mode }}
+                </div>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
