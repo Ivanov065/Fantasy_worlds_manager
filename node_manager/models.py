@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 # Defines access modes to the node
 class AccessModes(models.Model):
     name = models.CharField(max_length=40) # TODO: define modes logically
+
+    def __str__(self):
+        return f"{self.name}"
 
 # Defines nodes as atomic objects of parent-child "fantasy setting" relation
 # "parent" foreign key to itself will allow to "walk" through nodes 
@@ -15,6 +16,15 @@ class Nodes(models.Model):
     owner = models.ForeignKey(User, null=False, blank=False, on_delete=models.DO_NOTHING, related_name='node_owner') # TODO: make "if owner changes" logic
     creator = models.ForeignKey(User, null=False, blank=False, on_delete=models.DO_NOTHING, related_name='node_creator') # TODO: make "if creator deleted" logic
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL)
+    level = models.IntegerField(default=0, null=False, blank=False)
+
+    class Meta:
+        unique_together= (('name', 'creator'))
+
+# Helps to work with node tree
+class NodesPch(models.Model):
+    child = models.ForeignKey(Nodes, on_delete=models.CASCADE, related_name="nodes_pch_child")
+    parent = models.ForeignKey(Nodes, on_delete=models.CASCADE, related_name="nodes_pch_parent")
 
 # Contains pieces of information about certain node in text 
 class NodePieces(models.Model):

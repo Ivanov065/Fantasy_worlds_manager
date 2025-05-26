@@ -7,6 +7,7 @@ class NodeTreeForm(forms.ModelForm):
     )
     access_mode = forms.ModelChoiceField(
         queryset=AccessModes.objects.all(),
+        to_field_name="name",
         widget=forms.Select(attrs={"class": "form-control", "id" : "access_mode_input"}),
         empty_label='(nothing)'
     )
