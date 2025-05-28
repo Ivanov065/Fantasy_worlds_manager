@@ -1,4 +1,4 @@
-{% extends 'base_layout.html' %}
+{% extends 'base_layout_show_tree.html' %}
 
 {% block content %}
 
@@ -151,20 +151,7 @@
             </ul>
         </li>
     </template>
-    <script src="{% static 'script_tree_html_manager.js' %}"></script>
-    <script>
-        window.onload = function () {
-            items = document.getElementsByClassName('node_tree_single_item')
-            for (let i = 1; i < Number(document.getElementById('max_level').value); i++) {
-                for (let item in items) {
-                    if( item.firstElementChild.data_level == i.toString()){
-                        parent = items.filter(x => x.id = item.parent)
-                        parent.getElementByTagName('ul')[0].appendChild(item)
-                    }
-                }
-            }
-        }
-    </script>
+    
 </div>
 
 {% endblock %}

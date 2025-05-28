@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Nodes, NodesAllowedUsers, NodesPch
+from .models import Nodes, NodesAllowedUsers
 from .forms import NodeTreeForm
 
 # Base view
@@ -10,7 +10,14 @@ def home(request):
 
 # TODO: show user node tree
 def show_node_tree(request, pk):
-    nodes = Nodes.objects.filter(parent=pk)
+    nodes = Nodes.objects.filter(root_parent=pk)
+    max_level = 0
+    for node in nodes:
+        if node.level > max_level:
+            max_level = node.level
+    print(nodes)
+    print(max_level)
+    return render(request, "show_node_tree.html", {"nodes": nodes, "max_level": max_level})
 
 
 # TODO: create node tree (that means create root node)
@@ -26,8 +33,10 @@ def create_root(request):
             # print(request.POST["name"])
             created_root = Nodes.objects.get(creator=request.user, name=request.POST["name"])
             created_root.parent = created_root
-            created_root.save(update_fields=["parent"])
+            created_root.root_parent = created_root
+            created_root.save(update_fields=["parent", "root_parent"])
             NodesAllowedUsers.objects.create(node=created_root, allowed_user=request.user)
+            #NodesPch.objects.create(child=created_root, parent=created_root)
             
             return redirect("node_manager:home")
     else:

@@ -17,6 +17,7 @@ class Nodes(models.Model):
     creator = models.ForeignKey(User, null=False, blank=False, on_delete=models.DO_NOTHING, related_name='node_creator') # TODO: make "if creator deleted" logic
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL)
     level = models.IntegerField(default=0, null=False, blank=False)
+    root_parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.DO_NOTHING, related_name='root')
 
     class Meta:
         unique_together= (('name', 'creator'))

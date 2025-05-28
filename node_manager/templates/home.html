@@ -6,7 +6,11 @@
         <div class="p-4 text-center bg-body-tertiary rounded-3">
             <h1>My worlds</h1>
             {% for node in nodes %}
-            <h2>{{ node.name }}</h2>
+            <div class="mb-3 d-flex g-2">
+                <h2>{{ node.name }}</h2>
+                <a class="btn btn-info" href="{% url 'node_manager:show_node_tree' node.id %}">Подробнее</a>
+            </div>
+            
             {% endfor %}
         </div>
     </div>

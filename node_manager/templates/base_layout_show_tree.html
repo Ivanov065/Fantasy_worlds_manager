@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <!-- <link rel="stylesheet" href="{% static 'style.css' %}" /> -->
+  <link rel="stylesheet" href="{% static 'tree_style.scss' %}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'node_manager:home' %}">Fantasy crafter</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'node_manager:home' %}">Home</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'node_manager:create_root' %}">Создать новое дерево</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'users:logout' %}">Выйти</a>
+            </li>
+            {% else %}
+            
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'users:login' %}">Войти</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  
+  <main>{% block content %} {% endblock %}</main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+  <script src="{% static 'script_tree_html_manager.js' %}"></script>
+    <script>
+        window.onload = function () {
+            items = document.getElementsByClassName('node_tree_single_item')
+            for (let i = 1; i < Number(document.getElementById('max_level').value); i++) {
+                for (let item in items) {
+                    if( item.firstElementChild.data_level == i.toString()){
+                        parent = items.filter(x => x.id = item.parent)
+                        parent.getElementByTagName('ul')[0].appendChild(item)
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
