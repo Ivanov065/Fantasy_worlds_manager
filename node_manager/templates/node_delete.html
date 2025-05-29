@@ -1,0 +1,25 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="p-4 text-left bg-body-tertiary rounded-3">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="title">Подтвердите удаление поста</div>
+            <div class="">
+                При удалении данной ветки будут удалены все подчинённые ей ветки и вся информация о них.
+                Если вы не хотите потерять информацию подчинённых веток, рекомендуется перенести эти ветки в подчинение
+                другой ветке. 
+            </div>
+            <div class="buttons">
+                <button class="button danger">
+                    Нет, не удалять
+                </button>
+                <a class="button primary" href="{% url 'node_manager:home' %}">
+                    Да, удалить
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

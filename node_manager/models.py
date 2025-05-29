@@ -27,14 +27,15 @@ class NodesPch(models.Model):
     child = models.ForeignKey(Nodes, on_delete=models.CASCADE, related_name="nodes_pch_child")
     parent = models.ForeignKey(Nodes, on_delete=models.CASCADE, related_name="nodes_pch_parent")
 
-# Contains pieces of information about certain node in text 
-class NodePieces(models.Model):
-    node = models.ForeignKey(Nodes, null=False, blank=False, on_delete=models.CASCADE)
-    is_secret = models.BooleanField(null=False, blank=False, default=True) # defines if owner wants to show this piece to ANYONE except himself
-    body = models.CharField()
-
 # Contains users (as well as the owner and the creator) who can look at your "nodes tree"
 # In case when "AccessMode" of the node is not "public" defines allowed users
 class NodesAllowedUsers(models.Model):
     node = models.ForeignKey(Nodes, null=False, blank=False, on_delete=models.CASCADE)
     allowed_user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+
+# Contains pieces of information about certain node in text 
+class NodePiece(models.Model):
+    piece_name =  models.CharField(max_length=200)
+    node = models.ForeignKey(Nodes, null=False, blank=False, on_delete=models.CASCADE)
+    is_secret = models.BooleanField(null=False, blank=False, default=True) # defines if owner wants to show this piece to ANYONE except himself
+    body = models.CharField()

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Nodes, AccessModes
+from .models import Nodes, AccessModes, NodePiece
 
 class NodeTreeForm(forms.ModelForm):
     name = forms.CharField(
@@ -15,3 +15,21 @@ class NodeTreeForm(forms.ModelForm):
     class Meta:
         model = Nodes
         fields = ["name", "access_mode"]
+
+class NodePieceForm(forms.ModelForm):
+
+    piece_name = forms.CharField(
+        widget=forms.Textarea(attrs={"class":"form-control", "id": "piece_name_input"})
+    )
+
+    is_secret = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={"class":"form-control", "id":"is_secret_input"})
+    )
+
+    body = forms.CharField(
+        widget=forms.Textarea(attrs={"class":"form-control", "id": "body_input"})
+    )
+
+    class Meta:
+        model = NodePiece
+        fields = ["piece_name", "is_secret", "body"]
