@@ -3,7 +3,7 @@ body {
 }
 
 $border-color: #e3e5ef;
-$primary-color: #bada55;
+$primary-color: #37404c;
 
 .treeview {
   //Variables
@@ -13,7 +13,7 @@ $primary-color: #bada55;
     border-color: $border-color;
 
     &:hover {
-      background-color: #f7faea;
+      background-color: #c6c8bc71;
       color: $primary-color;
     }
   }
@@ -124,6 +124,8 @@ $primary-color: #bada55;
     .level {
       &-same,
       &-sub {
+        font-size: 9px !important;
+        font-weight: 500;
         position: absolute;
         display: none;
         transition: opacity 250ms cubic-bezier(0.7, 0, 0.3, 1);
@@ -137,33 +139,14 @@ $primary-color: #bada55;
       }
 
       &-same {
-        top: 0;
-        left: 45px;
+        top: 4px;
+        left: 75px;
+        width: 90px;
       }
       &-sub {
         top: 42px;
         left: 0px;
-      }
-      &-remove {
-        display: none;
-      }
-    }
-
-    &.selected {
-      background-color: #f9f9fb;
-      box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.10);
-
-      .level {
-        &-remove {
-          display: inline-block;
-        }
-        &-add {
-          display: none;
-        }
-        &-same,
-        &-sub {
-          display: none;
-        }
+        width: 80px;
       }
     }
   }

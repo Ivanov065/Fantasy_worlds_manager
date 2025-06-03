@@ -5,18 +5,18 @@
     <div class="p-4 text-left bg-body-tertiary rounded-3">
         <form action="" method="post">
             {% csrf_token %}
-            <div class="title">Подтвердите удаление поста</div>
-            <div class="">
+            <div class="fs-3 mb-3">Подтвердите удаление ветки {{ node.name }}</div>
+            <div class="mb-3">
                 При удалении данной ветки будут удалены все подчинённые ей ветки и вся информация о них.
                 Если вы не хотите потерять информацию подчинённых веток, рекомендуется перенести эти ветки в подчинение
                 другой ветке. 
             </div>
-            <div class="buttons">
-                <button class="button danger">
-                    Нет, не удалять
-                </button>
-                <a class="button primary" href="{% url 'node_manager:home' %}">
+            <div class="d-flex gap-4">
+                <button class="btn btn-danger" >
                     Да, удалить
+                </button>
+                <a class="btn btn-success" href="{% url 'node_manager:home' %}">
+                    Нет, не удалять
                 </a>
             </div>
         </form>

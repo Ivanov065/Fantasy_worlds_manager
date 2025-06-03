@@ -9,13 +9,13 @@
             {% for node in nodes %}
             <li class="node_tree_single_item" id="{{ node.id }}" parent="{{ node.parent.id }}">
                 <div class="treeview__level" data-level="{{ node.level }}">
-                    <span class="level-title">{{node.name}}</span>
+                    <a class="level-title" href="{% url 'node_manager:show_node' node.id %}">{{node.name}}</a>
                     <div class="treeview__level-btns">
-                        <div class="btn btn-default btn-sm level-add"><span class="fa fa-plus"></span></div>
-                        <div class="btn btn-default btn-sm level-remove"><span class="fa fa-trash text-danger"></span>
-                        </div>
-                        <div class="btn btn-default btn-sm level-same"><span>Add Same Level</span></div>
-                        <div class="btn btn-default btn-sm level-sub"><span>Add Sub Level</span></div>
+                        <a class="btn btn-default btn-sm level-remove" href="{% url 'node_manager:delete_node' node.id %}"><span class="fa fa-trash text-danger"></span>
+                        </a>
+                        <a class="btn btn-default btn-sm level-add"><span class="fa fa-plus"></span></a>
+                        <a class="btn btn-default btn-sm level-same" href="{% url 'node_manager:create_node_tree_branch' node.parent.id %}"><span>Add Same Level</span></a>
+                        <a class="btn btn-default btn-sm level-sub" href="{% url 'node_manager:create_node_tree_branch' node.id %}"><span>Add Sub Level</span></a>
                     </div>
                 </div>
                 <ul>

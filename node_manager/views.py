@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Nodes, NodesAllowedUsers
+from .models import Nodes, NodesAllowedUsers, NodePiece
 from .forms import NodeTreeForm, NodePieceForm
 from django.contrib.auth.decorators import login_required
 
@@ -44,12 +44,53 @@ def create_root(request):
     return render(request, "create_node_tree.html", {'form': form})
     
 
-
 # TODO: create node tree branch (that means create node that has parent in a node tree)
 @login_required(login_url='users:login')
-def create_node_tree_branch(request):
-    pass
+def create_node_tree_branch(request, parent):
+    if request.method == "POST":
+        form = NodeTreeForm(request.POST)
 
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.owner = request.user
+            instance.creator = request.user
+            form.save()
+
+            created_node = Nodes.objects.get(creator=request.user, name=request.POST["name"])
+            parent_node = Nodes.objects.get(pk=parent)
+            created_node.parent = parent_node
+            created_node.level = parent_node.level + 1
+            created_node.root_parent = parent_node.root_parent
+            created_node.save(update_fields=["parent", "root_parent", 'level'])
+
+            NodesAllowedUsers.objects.create(node=created_node, allowed_user=request.user)
+            
+            return redirect("node_manager:home")
+    else:
+        form = NodeTreeForm()
+        parent_node = Nodes.objects.get(pk=parent)
+
+    return render(request, "create_node_tree_branch.html", {'form': form, "parent_node": parent_node})
+
+
+def show_node(request, pk):
+    node = Nodes.objects.get(pk=pk)
+    pieces = NodePiece.objects.filter(node=node)
+
+    if request.method == "POST":
+        form = NodePieceForm(request.POST)
+        print('bla')
+        if form.is_valid():
+            print('bla-bla')
+            instance = form.save(commit=False)
+            instance.node = node
+            instance.save()
+            form = NodePieceForm()
+            return redirect("node_manager:show_node", pk=pk)
+
+    form = NodePieceForm()
+    return render(request, "show_node.html", {'form': form, 'pieces': pieces, "node": node})
+    
 
 # TODO: update node tree (now update node no matter what it is)
 @login_required(login_url='users:login')

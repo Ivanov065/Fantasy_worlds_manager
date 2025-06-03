@@ -6,8 +6,8 @@ body {
   border-color: #e3e5ef;
 }
 .treeview .btn-default:hover {
-  background-color: #f7faea;
-  color: #bada55;
+  background-color: rgba(198, 200, 188, 0.4431372549);
+  color: #37404c;
 }
 .treeview ul {
   list-style: none;
@@ -81,7 +81,7 @@ body {
   width: 55px;
   border-radius: 50%;
   border: 7.5px solid #eef6d5;
-  background-color: #bada55;
+  background-color: #37404c;
   color: #fff;
   font-size: 20px;
 }
@@ -91,6 +91,8 @@ body {
   position: relative;
 }
 .treeview__level .level-same, .treeview__level .level-sub {
+  font-size: 9px !important;
+  font-weight: 500;
   position: absolute;
   display: none;
   transition: opacity 250ms cubic-bezier(0.7, 0, 0.3, 1);
@@ -103,28 +105,14 @@ body {
   color: #da5555;
 }
 .treeview__level .level-same {
-  top: 0;
-  left: 45px;
+  top: 4px;
+  left: 75px;
+  width: 90px;
 }
 .treeview__level .level-sub {
   top: 42px;
   left: 0px;
-}
-.treeview__level .level-remove {
-  display: none;
-}
-.treeview__level.selected {
-  background-color: #f9f9fb;
-  box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.1);
-}
-.treeview__level.selected .level-remove {
-  display: inline-block;
-}
-.treeview__level.selected .level-add {
-  display: none;
-}
-.treeview__level.selected .level-same, .treeview__level.selected .level-sub {
-  display: none;
+  width: 80px;
 }
 .treeview .level-title {
   cursor: pointer;

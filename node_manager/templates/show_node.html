@@ -1,0 +1,31 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+
+<div class="container my-5">
+    <div class="fs-2 mb-4">Ветка "{{ node.name }}"</div>
+    {% for piece in pieces %}
+    <div class="fs-3 mb-3">{{ piece.piece_name }}</div>
+    <div class="fs-4 mb-4">{{ piece.body}}</div>
+    {% endfor %}
+    
+    <div class="fs-4">Добавьте еще данных:</div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="piece_name_input" class="form-label">Имя параграфа</label>
+            {{ form.piece_name }}
+        </div>
+        <div class="mb-3">
+            <label for="is_secret_input" class="form-label">Секретный параграф</label>
+            {{ form.is_secret }}
+        </div>
+        <div class="mb-3">
+            <label for="body_input" class="form-label">Содержимое параграфа</label>
+            {{ form.body }}
+        </div>
+        <button type="submit" class="btn btn-success">Сохранить</button>
+    </form>
+</div>
+
+{% endblock %}
