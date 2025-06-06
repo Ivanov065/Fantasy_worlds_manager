@@ -11,5 +11,7 @@ urlpatterns = [
     path('update_branch/<int:pk>', views.update_node, name='update_node'),
     path('delete_branch/<int:pk>', views.delete_node, name='delete_node'),
     path('create_node_piece/<int:pk>', views.create_node_tree_piece, name="create_node_tree_piece"),
-    path('not_found/', views.not_found, name='not_found')
+    # path('delete_node_piece/<int:pk>', views.delete_node_tree_piece, name='delete_node_tree_piece'),
+    path('not_found/', views.not_found, name='not_found'),
+    path('forbidden/', views.forbidden, name='forbidden')
 ]

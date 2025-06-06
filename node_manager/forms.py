@@ -19,16 +19,16 @@ class NodeTreeForm(forms.ModelForm):
 class NodePieceForm(forms.ModelForm):
 
     piece_name = forms.CharField(
-        widget=forms.TextInput(attrs={"class":"form-control", "id": "piece_name_input"})
+        widget=forms.TextInput(attrs={"class":"form-control piece_name_input", "id": "piece_name_input"})
     )
 
     is_secret = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={"class":"form-check-input mx-2", "id":"is_secret_input"}),
+        widget=forms.CheckboxInput(attrs={"class":"form-check-input mx-2 is_secret_input", "id":"is_secret_input"}),
         required=False
     )
 
     body = forms.CharField(
-        widget=forms.Textarea(attrs={"class":"form-control", "id": "body_input"})
+        widget=forms.Textarea(attrs={"class":"form-control body_input", "id": "body_input"})
     )
 
     class Meta:

@@ -18,11 +18,4 @@ jQuery(function() {
     jQuery(this).find("span").toggleClass("fa-plus").toggleClass("fa-times text-danger");
     jQuery(this).siblings().toggleClass("in");
   });
-
-  // Selected Level
-  // jQuery(".js-treeview").on("click", ".level-title", function() {
-  //   let isSelected = jQuery(this).closest("[data-level]").hasClass("selected");
-  //   !isSelected && jQuery(this).closest(".js-treeview").find("[data-level]").removeClass("selected");
-  //   jQuery(this).closest("[data-level]").toggleClass("selected");
-  // }); 
 });

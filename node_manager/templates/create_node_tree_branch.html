@@ -11,10 +11,21 @@
                     <label for="name_input" class="form-label">Название дерева</label>
                     {{ form.name }}
                 </div>
+                {% if parent_node.access_mode == 'public' %}
                 <div class="mb-3">
                     <label for="access_mode_input" class="form-label">Видимость дерева</label>
                     {{ form.access_mode }}
                 </div>
+                {% else %}
+                <div class="mb-3">
+                    <button type="button" class="btn btn-lg btn-info" 
+                        data-bs-toggle="popover" 
+                        data-bs-title="Видимость ветки" 
+                        data-bs-content="Потомки приватной ветки не могут быть публичными.">
+                        Данная ветка приватная >
+                    </button>
+                </div>
+                {% endif %}
                 <button type="submit" class="btn btn-success">Сохранить</button>
             </form>
         </div>

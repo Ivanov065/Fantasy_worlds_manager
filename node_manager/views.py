@@ -30,13 +30,12 @@ def create_root(request):
             instance.owner = request.user
             instance.creator = request.user
             form.save()
-            # print(request.POST["name"])
+
             created_root = Nodes.objects.get(creator=request.user, name=request.POST["name"])
             created_root.parent = created_root
             created_root.root_parent = created_root
             created_root.save(update_fields=["parent", "root_parent"])
             NodesAllowedUsers.objects.create(node=created_root, allowed_user=request.user)
-            #NodesPch.objects.create(child=created_root, parent=created_root)
             
             return redirect("node_manager:home")
     else:
@@ -47,17 +46,23 @@ def create_root(request):
 # TODO: create node tree branch (that means create node that has parent in a node tree)
 @login_required(login_url='users:login')
 def create_node_tree_branch(request, parent):
+
+    parent_node = Nodes.objects.get(pk=parent)
+
+    if request.user != parent_node.owner:
+                return redirect("node_manager:forbidden")
+    
     if request.method == "POST":
         form = NodeTreeForm(request.POST)
 
         if form.is_valid():
+
             instance = form.save(commit=False)
             instance.owner = request.user
             instance.creator = request.user
             form.save()
 
             created_node = Nodes.objects.get(creator=request.user, name=request.POST["name"])
-            parent_node = Nodes.objects.get(pk=parent)
             created_node.parent = parent_node
             created_node.level = parent_node.level + 1
             created_node.root_parent = parent_node.root_parent
@@ -68,7 +73,6 @@ def create_node_tree_branch(request, parent):
             return redirect("node_manager:home")
     else:
         form = NodeTreeForm()
-        parent_node = Nodes.objects.get(pk=parent)
 
     return render(request, "create_node_tree_branch.html", {'form': form, "parent_node": parent_node})
 
@@ -77,18 +81,40 @@ def show_node(request, pk):
     node = Nodes.objects.get(pk=pk)
     pieces = NodePiece.objects.filter(node=node)
 
-    if request.method == "POST":
-        form = NodePieceForm(request.POST)
-        print('bla')
-        if form.is_valid():
-            print('bla-bla')
-            instance = form.save(commit=False)
-            instance.node = node
-            instance.save()
-            form = NodePieceForm()
-            return redirect("node_manager:show_node", pk=pk)
+    print(request.POST)
 
-    form = NodePieceForm()
+    if request.method == "POST":
+
+        if request.user != node.owner:
+            return redirect("node_manager:forbidden")
+        
+        print(request.POST)
+
+        if 'edit' in request.POST:
+            piece = NodePiece.objects.get(pk=request.POST['piece_id'])
+            form = NodePieceForm(request.POST, instance=piece)
+            print(request.POST)
+            if form.is_valid():
+                piece.body = request.POST['body']
+                piece.piece_name = request.POST['piece_name']
+                # print(request.POST['is_secret'])
+                # piece.is_secret = request.POST['is_secret']
+                # piece.save(update_fields=["body", "piece_name", 'is_secret'])
+                return redirect("node_manager:show_node", pk=pk)
+        else:
+            print(request.POST)
+            form = NodePieceForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.node = node
+                instance.save()
+                return redirect("node_manager:show_node", pk=pk)
+
+    if request.user != node.owner:
+        form = None
+    else:
+        form = NodePieceForm()
+
     return render(request, "show_node.html", {'form': form, 'pieces': pieces, "node": node})
     
 
@@ -96,7 +122,6 @@ def show_node(request, pk):
 @login_required(login_url='users:login')
 def update_node(request):
     pass
-
 
 # TODO: delete node tree (deletes any node AND IT'S CHILDREN)
 @login_required(login_url='users:login')
@@ -139,8 +164,21 @@ def update_node_tree_piece(request):
 
 # TODO: delete node tree piece
 @login_required(login_url='users:login')
-def delete_node_tree_piece(request):
-    pass
+def delete_node_tree_piece(request, pk):
+    node_piece = NodePiece.objects.get(pk=pk)
+    node = node_piece.node
+
+    if node.owner != request.user and not request.user.is_superuser:
+        return redirect("node_manager:forbidden")
+
+    if request.method == "POST":
+        node_piece.delete()
+        return redirect("node_manager:show_node", pk = node.pk)
+
+    return redirect("node_manager:show_node", pk = node.pk)
 
 def not_found(request):
     return render(request, "404.html")
+
+def forbidden(request):
+    return render(request, "forbidden.html")
