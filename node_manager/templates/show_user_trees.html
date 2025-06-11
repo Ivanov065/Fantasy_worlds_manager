@@ -1,0 +1,26 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="container my-5">
+    {% for root in roots %}
+        <div class="mb-3 bg-light-subtle rounded-4 p-3">
+            {% if root.access_mode.name == 'private' %}
+            <div class="d-flex gap-2 mb-2 align-items-center">
+                <div class="fs-2">{{ root.name }}</div>
+                <div class="fs-5"><span class="badge rounded-pill text-bg-warning">Private</span></div>
+            </div>
+            {% elif root.access_mode.name == 'public' %}
+            <div class="d-flex gap-2 mb-2 align-items-center">
+                <div class="fs-2">{{ root.name }}</div>
+                <div class="fs-5"><span class="badge rounded-pill text-bg-primary">Public</span></div>
+            </div>
+            {% endif %}
+            <div class="btn-group" role="group">
+                <a type="button" href="{% url 'node_manager:show_node_tree' root.id %}" class="btn btn-info">Просмотреть</a>
+                <a type="button" href="" class="btn btn-warning">Изменить корень</a>
+                <a type="button" href="{% url 'node_manager:delete_node' root.id %}" class="btn btn-danger">Удалить дерево</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

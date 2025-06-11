@@ -29,6 +29,9 @@
               <a class="nav-link active" href="{% url 'node_manager:create_root' %}">Создать новое дерево</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link active" href="{% url 'node_manager:show_user_trees' %}">Мои деревья</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link active" href="{% url 'users:logout' %}">Выйти</a>
             </li>
             {% else %}
