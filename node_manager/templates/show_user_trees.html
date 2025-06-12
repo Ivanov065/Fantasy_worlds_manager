@@ -17,7 +17,7 @@
             {% endif %}
             <div class="btn-group" role="group">
                 <a type="button" href="{% url 'node_manager:show_node_tree' root.id %}" class="btn btn-info">Просмотреть</a>
-                <a type="button" href="" class="btn btn-warning">Изменить корень</a>
+                <a type="button" href="{% url 'node_manager:update_node' root.id %}" class="btn btn-warning">Изменить корень</a>
                 <a type="button" href="{% url 'node_manager:delete_node' root.id %}" class="btn btn-danger">Удалить дерево</a>
             </div>
         </div>

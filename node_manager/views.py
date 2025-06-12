@@ -78,6 +78,7 @@ def create_node_tree_branch(request, parent):
             NodesAllowedUsers.objects.create(node=created_node, allowed_user=request.user)
             
             return redirect("node_manager:home")
+            
     else:
         form = NodeTreeForm()
 
@@ -127,7 +128,8 @@ def update_node(request, pk):
             form.save()
             return redirect("node_manager:home")
     else:
-        form = NodeTreeForm()
+        form = NodeTreeForm(instance=node)
+        form.access_mode = node.access_mode.name
 
     return render(request, "update_node_tree_branch.html", {'form': form, "parent_node": parent_node})
 
@@ -184,9 +186,9 @@ def update_node_tree_piece(request, pk):
         form = NodePieceForm(request.POST, instance=node_piece)
 
         if form.is_valid():
-            print('---------------------------------------')
-            print(request.POST)
-            print('---------------------------------------')
+            # print('---------------------------------------')
+            # print(request.POST)
+            # print('---------------------------------------')
             node_piece.body = request.POST['body']
             node_piece.piece_name = request.POST['piece_name']
 
