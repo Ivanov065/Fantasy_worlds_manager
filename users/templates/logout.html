@@ -1,17 +1,17 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
-<div class="form">
+<div class="container my-5 text-center">
   <form method="post">
     {% csrf_token %}
-    <div class="title">Вы уверены что хотите выйти?</div>
+    <div class="fs-2 mb-4">Вы уверены что хотите выйти?</div>
 
-    <div class="buttons">
-      <button class="button primary">
-        <ion-icon name="checkmark-circle-outline"></ion-icon>
+    <div class="d-flex gap-3 align-items-center justify-content-center">
+      <button class="btn btn-success">
+        Выйти
       </button>
-      <a class="button danger" href="{% url 'node_manager:home' %}">
-        <ion-icon name="close-circle-outline"></ion-icon>
+      <a class="btn btn-danger" href="{% url 'node_manager:home' %}">
+        Отмена  
       </a>
     </div>
   </form>

@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 
 class RegisterForm(UserCreationForm):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={"placeholder": "Введите ваш юзернейм"})
+        widget=forms.TextInput(attrs={"placeholder": "Введите ваш юзернейм", "class":"form-control mb-3"})
     )
     password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={"placeholder": "Придумайте пароль"})
+        widget=forms.PasswordInput(attrs={"placeholder": "Придумайте пароль", "class":"form-control mb-3"})
     )
     password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={"placeholder": "Повторите пароль"})
+        widget=forms.PasswordInput(attrs={"placeholder": "Повторите пароль", "class":"form-control mb-3"})
     )
 
     class Meta:
@@ -21,10 +21,10 @@ class RegisterForm(UserCreationForm):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={"placeholder": "Введите ваш юзернейм"})
+        widget=forms.TextInput(attrs={"placeholder": "Введите ваш юзернейм", "class":"form-control mb-3"})
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"placeholder": "Введите пароль"})
+        widget=forms.PasswordInput(attrs={"placeholder": "Введите пароль", "class":"form-control mb-3"})
     )
 
     class Meta:

@@ -1,19 +1,30 @@
-{% extends 'base_layout.html' %} 
+{% extends 'base_layout.html' %}
 
 {% block content %}
-<div class="form">
-  <form action="" method="post" enctype="multipart/form-data" style="width: 30vw">
-    {% csrf_token %}
-    {% for field in form %}
+<div class="container my-5 text-center">
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="fs-1 mb-3">Авторизация пользователя</div>
 
-    <div class="field">
-      {{ field }}
-    </div>
-    {% endfor %}
-    <div class="redirect" style="text-align: right;">Перейти на страницу 
-      <a href="{% url 'users:login' %}">входа</a>
-    </div>
-    <button>Зарегистрироваться</button>
-  </form>
+      {% for field, errors in errors.items %}
+      {% for error in errors %}
+      <div class="alert alert-danger alert-dismissible fade show fs-4" role="alert">
+        {{error}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endfor %}
+
+      {% for field in form %}
+
+      <div class="field">
+        {{ field }}
+      </div>
+      {% endfor %}
+      <div class="fs-4 mb-3" style="text-align: right;">Перейти на страницу
+        <a href="{% url 'users:login' %}">входа</a>
+      </div>
+      <button class="btn btn-success btn-lg">Зарегистрироваться</button>
+    </form>
 </div>
 {% endblock %}

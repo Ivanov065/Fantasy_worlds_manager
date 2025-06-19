@@ -131,7 +131,7 @@ def update_node(request, pk):
         form = NodeTreeForm(instance=node)
         form.access_mode = node.access_mode.name
 
-    return render(request, "update_node_tree_branch.html", {'form': form, "parent_node": parent_node})
+    return render(request, "update_node_tree_branch.html", {'form': form, "parent_node": parent_node, "node":node})
 
 # TODO: delete node tree (deletes any node AND IT'S CHILDREN)
 @login_required(login_url='users:login')
@@ -186,9 +186,6 @@ def update_node_tree_piece(request, pk):
         form = NodePieceForm(request.POST, instance=node_piece)
 
         if form.is_valid():
-            # print('---------------------------------------')
-            # print(request.POST)
-            # print('---------------------------------------')
             node_piece.body = request.POST['body']
             node_piece.piece_name = request.POST['piece_name']
 

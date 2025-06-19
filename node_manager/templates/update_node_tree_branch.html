@@ -11,7 +11,7 @@
                     <label for="name_input" class="form-label">Название дерева</label>
                     {{ form.name }}
                 </div>
-                {% if parent_node.access_mode.name == 'public' %}
+                {% if parent_node.access_mode.name == 'public' or node.level == 0 %}
                 <div class="mb-3">
                     <label for="access_mode_input" class="form-label">Видимость дерева</label>
                     {{ form.access_mode }}
