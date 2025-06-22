@@ -1,17 +1,17 @@
 {% extends 'base_layout.html' %} 
 
 {% block content %}
-<div class="container">
-  <div class="flex-container">
-    <div class="image">
+<div class="container my-5 text-center">
+  <div class="bg-light-subtle rounded-4 p-3">
+    <div class="img">
       <img src="https://static-00.iconduck.com/assets.00/404-page-not-found-illustration-1024x499-muqmchqg.png" alt="" />
     </div>
-    <div class="text">
-      <div class="title">
-        Страница не найдена <br>
+    <div class="">
+      <div class="fs-4 mb-3">
+        Страница не найдена: запрошенная информация не существует <br>
         Пожалуйста, вернитесь на главную
       </div>
-      <a href="{% url 'app:home' %}" class="button">На главную</a>
+      <a href="{% url 'node_manager:home' %}" class="btn btn-primary btn-lg">На главную</a>
     </div>
   </div>
 </div>

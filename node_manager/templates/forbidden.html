@@ -1,17 +1,19 @@
-{% extends 'base_layout.html' %} 
+{% extends 'base_layout.html' %}
 
 {% block content %}
-<div class="container">
-  <div class="container">
+<div class="container my-5 text-center">
+  <div class="bg-light-subtle rounded-4 p-3">
     <div class="img">
-      <img src="https://cdni.iconscout.com/illustration/premium/thumb/error-403-illustration-download-in-svg-png-gif-file-formats--forbidden-client-website-http-web-empty-pages-pack-user-interface-illustrations-6588413.png" alt="" />
+      <img
+        src="https://cdni.iconscout.com/illustration/premium/thumb/error-403-illustration-download-in-svg-png-gif-file-formats--forbidden-client-website-http-web-empty-pages-pack-user-interface-illustrations-6588413.png"
+        alt="" />
     </div>
     <div class="text">
-      <div class="fs3 mb-2">
+      <div class="fs-2 mb-3">
         Кажется, у вас нет прав <br>
         на выполнения этого действия
       </div>
-      <a href="{% url 'node_manager:home' %}" class="btn">На главную</a>
+      <a href="{% url 'node_manager:home' %}" class="btn btn-primary btn-lg">На главную</a>
     </div>
   </div>
 </div>

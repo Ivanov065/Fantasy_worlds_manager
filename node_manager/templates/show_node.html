@@ -5,34 +5,60 @@
 <div class="container my-5">
     <div class="fs-1 mb-5">Ветка "{{ node.name }}"</div>
     {% for piece in pieces %}
-    <div class="mb-5 piece" id="piece-{{piece.id}}" id_value="{{ piece.id }}">
+    <div class="mb-5 piece bg-light-subtle rounded-4 p-3" id="piece-{{piece.id}}" id_value="{{ piece.id }}">
         <div class="d-none is_secret" value="{{ piece.is_secret }}"></div>
-        <div class="mb-3 d-flex gap-3">
+        <div class="mb-3 d-flex align-items-center gap-3">
             <div class="fs-3 piece_name">{{ piece.piece_name }}</div>
+            {% if piece.is_secret %}
+                <div class="fs-4"><span class="badge rounded-pill text-bg-warning">Secret</span></div>
+            {% endif %}
+            {% if user == node.owner %}
             <button class="btn btn-info"><span class="fa fa-edit"></span></button>
-            <form method="post" action="{%url 'node_manager:delete_node_tree_piece' piece.id %}">
-                {% csrf_token %}
-                <button class="btn btn-danger"><span class="fa fa-trash"></span></button>
-            </form>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                data-bs-target="#deleteModal{{piece.id}}">
+                <span class="fa fa-trash">
+            </button>
+            {% endif %}
         </div>
         <div class="fs-4 piece_body">{{ piece.body}}</div>
     </div>
+    <div class="modal fade" id="deleteModal{{piece.id}}" tabindex="-1" aria-labelledby="deleteModalLabel{{piece.id}}"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel{{piece.id}}">Внимание!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены, что хотите удалить этот элемент?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Отмена</button>
+                    <!-- <button type="button" class="btn btn-primary">Удалить</button> -->
+                    <form method="post" action="{%url 'node_manager:delete_node_tree_piece' piece.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-danger" data-bs-dismiss="modal">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     {% if form %}
-    <form class="d-none mb-5 form-piece" method="post"
-          id="form-piece-{{piece.id}}" id_value="{{ piece.id }}"
-          action="{% url 'node_manager:update_node_tree_piece' piece.id %}">
+    <form class="d-none mb-5 form-piece bg-light-subtle rounded-4 p-3" method="post" id="form-piece-{{piece.id}}"
+        id_value="{{ piece.id }}" action="{% url 'node_manager:update_node_tree_piece' piece.id %}">
         {% csrf_token %}
         <input type="hidden" name="piece_id" value="{{ piece.id }}">
         <div class="mb-3">
-            <label for="piece_name_input" class="form-label">Имя параграфа</label>
+            <label for="piece_name_input" class="form-label fs-4">Имя параграфа</label>
             {{ form.piece_name }}
         </div>
-        <div class="mb-3">
-            <label for="is_secret_input" class="form-label">Секретный параграф</label>
+        <div class="mb-3 d-flex align-items-center gap-2">
+            <label for="is_secret_input" class="form-label fs-4">Секретный параграф</label>
             {{ form.is_secret }}
         </div>
         <div class="mb-3">
-            <label for="body_input" class="form-label">Содержимое параграфа</label>
+            <label for="body_input" class="form-label fs-4">Содержимое параграфа</label>
             {{ form.body }}
         </div>
         <div class="d-flex gap-3">
@@ -44,23 +70,26 @@
     {% endfor %}
 
     {% if form %}
-    <div class="fs-4">Добавьте еще данных:</div>
-    <form action="" method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="piece_name_input" class="form-label">Имя параграфа</label>
-            {{ form.piece_name }}
-        </div>
-        <div class="mb-3">
-            <label for="is_secret_input" class="form-label">Секретный параграф</label>
-            {{ form.is_secret }}
-        </div>
-        <div class="mb-3">
-            <label for="body_input" class="form-label">Содержимое параграфа</label>
-            {{ form.body }}
-        </div>
-        <button type="submit" class="btn btn-success">Сохранить</button>
-    </form>
+    <div class="bg-light-subtle rounded-4 p-3">
+        <div class="fs-4 mb-3">Добавьте еще данных:</div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="piece_name_input" class="form-label fs-4">Имя параграфа</label>
+                {{ form.piece_name }}
+            </div>
+            <div class="mb-3">
+                <label for="is_secret_input" class="form-label fs-4">Секретный параграф</label>
+                {{ form.is_secret }}
+            </div>
+            <div class="mb-3">
+                <label for="body_input" class="form-label fs-4">Содержимое параграфа</label>
+                {{ form.body }}
+            </div>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </form>
+    </div>
     {% endif %}
 </div>
+
 {% endblock %}

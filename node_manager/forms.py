@@ -23,7 +23,7 @@ class NodePieceForm(forms.ModelForm):
     )
 
     is_secret = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={"class":"form-check-input mx-2 is_secret_input", "id":"is_secret_input"}),
+        widget=forms.CheckboxInput(attrs={"class":"form-check-input mx-2 is_secret_input checkbox-lg", "id":"is_secret_input"}),
         required=False
     )
 
