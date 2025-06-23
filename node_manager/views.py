@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Nodes, NodesAllowedUsers, NodePiece
+from .models import Nodes, NodePiece
 from .forms import NodeTreeForm, NodePieceForm
 from django.contrib.auth.decorators import login_required
 
@@ -54,7 +54,6 @@ def create_root(request):
             created_root.parent = created_root
             created_root.root_parent = created_root
             created_root.save(update_fields=["parent", "root_parent"])
-            NodesAllowedUsers.objects.create(node=created_root, allowed_user=request.user)
             
             return redirect("node_manager:home")
     else:
@@ -88,8 +87,6 @@ def create_node_tree_branch(request, parent):
             created_node.level = parent_node.level + 1
             created_node.root_parent = parent_node.root_parent
             created_node.save(update_fields=["parent", "root_parent", 'level'])
-
-            NodesAllowedUsers.objects.create(node=created_node, allowed_user=request.user)
             
             return redirect("node_manager:home")
             
