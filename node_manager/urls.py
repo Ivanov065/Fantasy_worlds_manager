@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 
-
 urlpatterns = [
     path("", views.home, name='home'),
     path('show_tree/<int:pk>', views.show_node_tree, name='show_node_tree'),

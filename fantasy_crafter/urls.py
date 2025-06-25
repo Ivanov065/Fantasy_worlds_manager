@@ -23,4 +23,4 @@ urlpatterns = [
     path("", include(("node_manager.urls", "node_manager"), namespace='node_manager')),
     path("users/", include(("users.urls", "users"), namespace='users'))
 ]
-urlpatterns += staticfiles_urlpatterns()
+urlpatterns += staticfiles_urlpatterns() 

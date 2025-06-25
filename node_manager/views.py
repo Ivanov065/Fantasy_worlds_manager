@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Nodes, NodePiece
-from .forms import NodeTreeForm, NodePieceForm
+from .forms import NodeTreeForm, NodePieceForm, AccessModes
 from django.contrib.auth.decorators import login_required
 
 def home(request):
-    nodes = Nodes.objects.all()
+    nodes = Nodes.objects.filter(access_mode=AccessModes.objects.get(name="public"), level = 0)
     return render(request, "home.html", {"nodes": nodes})
 
 
@@ -26,6 +26,7 @@ def show_node_tree(request, pk):
     for node in nodes:
         if node.level > max_level:
             max_level = node.level
+            
     return render(request, "show_node_tree.html", {"nodes": nodes, "max_level": max_level})
 
 

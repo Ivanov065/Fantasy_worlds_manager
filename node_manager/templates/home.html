@@ -1,17 +1,17 @@
 {% extends 'base_layout.html' %}
     
 {% block content %}
-
     <div class="container my-5">
-        <div class="p-4 text-center bg-body-tertiary rounded-3">
-            <h1>My worlds</h1>
-            {% for node in nodes %}
-            <div class="mb-3 d-flex g-2">
-                <h2>{{ node.name }}</h2>
-                <a class="btn btn-info" href="{% url 'node_manager:show_node_tree' node.id %}">Подробнее</a>
+    {% for node in nodes %}
+        <div class="mb-3 bg-light-subtle rounded-4 p-3">
+            <div class="d-flex gap-2 mb-2 align-items-center">
+                <div class="fs-2">{{ node.name }}</div>
+                <div class="fs-5"><span class="badge rounded-pill text-bg-primary">Public</span></div>
             </div>
-            
-            {% endfor %}
+            <div class="btn-group" role="group">
+                <a type="button" href="{% url 'node_manager:show_node_tree' node.id %}" class="btn btn-info">Просмотреть</a>
+            </div>
         </div>
-    </div>
+    {% endfor %}
+</div>
 {% endblock %}
